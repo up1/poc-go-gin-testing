@@ -14,11 +14,6 @@ import (
 
 func TestClaimV4(t *testing.T) {
 	gin.SetMode(gin.TestMode)
-	// request := q1.Request{
-	// 	Address_id: "0x123DFPER321XCAAZ",
-	// }
-	// jsonStr, _ := json.Marshal(request)
-
 	reader := strings.NewReader("address_id=0x123DFPER321XCAAZ")
 	res := httptest.NewRecorder()
 	c, r := gin.CreateTestContext(res)
