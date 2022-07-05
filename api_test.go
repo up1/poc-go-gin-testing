@@ -3,9 +3,9 @@ package q1_test
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"net/http/httptest"
+	"net/url"
 	"q1"
 	"strings"
 	"testing"
@@ -16,7 +16,14 @@ import (
 func TestClaimV4(t *testing.T) {
 	expected := "0x123DFPER321XCAAZ"
 	gin.SetMode(gin.TestMode)
-	reader := strings.NewReader(fmt.Sprintf("address_id=%s", expected))
+
+	// From Weerasak Chongnguluam
+	formFields := url.Values{}
+	formFields.Add("address_id", expected)
+	reader := strings.NewReader(formFields.Encode())
+
+	// reader := strings.NewReader(fmt.Sprintf("address_id=%s", expected))
+
 	res := httptest.NewRecorder()
 	c, r := gin.CreateTestContext(res)
 	c.Request = httptest.NewRequest(http.MethodPost, "/claim", reader)
